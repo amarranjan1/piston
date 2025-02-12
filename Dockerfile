@@ -4,20 +4,10 @@ FROM python:3.10
 # Set working directory
 WORKDIR /app
 
-# Install required system dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Copy files to the container
+COPY . .  
 
-# Clone the Piston repository
-RUN git clone https://github.com/engineer-man/piston.git /app
-
-# Move into the repository
-WORKDIR /app
-
-# Upgrade pip to avoid dependency issues
+# Upgrade pip
 RUN pip install --upgrade pip
 
 # Install dependencies
