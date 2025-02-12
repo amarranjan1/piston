@@ -1,22 +1,34 @@
-FROM python:3.10
-
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    jq \
-    && rm -rf /var/lib/apt/lists/*
+# Use the official Node.js image
+FROM node:18
 
 # Set working directory
 WORKDIR /app
 
-# Clone the Piston API repository
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    python3 \
+    python3-pip \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone the Piston repository
 RUN git clone https://github.com/engineer-man/piston.git /app
 
-# Install Piston API dependencies
-RUN pip install -r requirements.txt
+# Move to the cloned directory
+WORKDIR /app
 
-# Expose port 80 for API access
+# Install Python dependencies
+RUN pip3 install -r requirements.txt
+
+# Install Node.js dependencies
+RUN npm install
+
+# Build the project
+RUN npm run build
+
+# Expose port 80
 EXPOSE 80
 
-# Run the API
-CMD ["python", "main.py"]
+# Start the API
+CMD ["node", "main.js"]
