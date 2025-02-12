@@ -1,6 +1,7 @@
 {
     "dependencies": {
-        "nocamel": "^1.0.0"
+        "nocamel": "^1.0.0",
+        "logplease": "^1.2.15"
     },
     "devDependencies": {
         "prettier": "2.4.1"
