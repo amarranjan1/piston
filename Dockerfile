@@ -1,34 +1,30 @@
-# Use the official Node.js image
-FROM node:18
+# Use Python as the base image
+FROM python:3.10
 
 # Set working directory
 WORKDIR /app
 
-# Install dependencies
+# Install required system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
-    python3 \
-    python3-pip \
     git \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone the Piston repository
 RUN git clone https://github.com/engineer-man/piston.git /app
 
-# Move to the cloned directory
+# Move into the repository
 WORKDIR /app
 
-# Install Python dependencies
-RUN pip3 install -r requirements.txt
+# Upgrade pip to avoid dependency issues
+RUN pip install --upgrade pip
 
-# Install Node.js dependencies
-RUN npm install
+# Install dependencies
+RUN pip install -r requirements.txt
 
-# Build the project
-RUN npm run build
+# Expose port
+EXPOSE 2000
 
-# Expose port 80
-EXPOSE 80
-
-# Start the API
-CMD ["node", "main.js"]
+# Run the API
+CMD ["python", "main.py"]
