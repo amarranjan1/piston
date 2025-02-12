@@ -1,5 +1,5 @@
-# Use Python as the base image
-FROM python:3.10
+# Use Node.js as the base image
+FROM node:18
 
 # Set working directory
 WORKDIR /app
@@ -7,14 +7,11 @@ WORKDIR /app
 # Copy files to the container
 COPY . .  
 
-# Upgrade pip
-RUN pip install --upgrade pip
-
 # Install dependencies
-RUN pip install -r requirements.txt
+RUN npm install
 
 # Expose port
 EXPOSE 2000
 
 # Run the API
-CMD ["python", "main.py"]
+CMD ["node", "api/src/index.js"]
