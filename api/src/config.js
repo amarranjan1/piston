@@ -19,7 +19,7 @@ const options = {
     },
     data_directory: {
         desc: 'Absolute path to store all piston related data at',
-        default: '/piston',
+        default: './piston',
         validators: [
             x => fss.exists_sync(x) || `Directory ${x} does not exist`,
         ],
